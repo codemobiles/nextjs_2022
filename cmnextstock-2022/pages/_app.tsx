@@ -14,7 +14,6 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
 import createEmotionCache from "../utility/createEmotionCache";
-import lightThemeOptions from "../styles/theme/lightThemeOptions";
 import "../styles/globals.css";
 import Header from "../components/Layouts/Header";
 import Menu from "../components/Layouts/Menu";
@@ -33,10 +32,10 @@ const theme = createTheme({
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          backgroundImage:
-            "url(" +
-            `${process.env.PUBLIC_URL}/images/background_menu.jpg` +
-            ")",
+          backgroundImage: 'url("/static/img/background_menu.png")',
+          backgroundRepeat: "no-repeat",
+          backgroundColor: "#f2fcff",
+          backgroundPosition: "bottom",
           width: drawerWidth,
         },
       },

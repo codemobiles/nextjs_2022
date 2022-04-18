@@ -63,10 +63,7 @@ export default function Menu({ open, onDrawerClose }: MenuProp) {
     >
       <DrawerHeader>
         <Stack direction="row" alignItems="center">
-          <img
-            src={`${process.env.PUBLIC_URL}/images/cm_logo.png`}
-            style={{ height: 30 }}
-          />
+          <img src="/static/img/cm_logo.png" style={{ height: 30 }} />
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
