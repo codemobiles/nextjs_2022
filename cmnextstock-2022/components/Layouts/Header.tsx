@@ -21,6 +21,9 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { styled } from "@mui/system";
 import { useTheme } from "@mui/material";
+import { useAppDispatch } from "@/store/store";
+import { signOut } from "@/store/slices/userSlice";
+import { Router, useRouter } from "next/router";
 
 const drawerWidth = 240;
 
@@ -31,7 +34,8 @@ type HeaderProp = {
 
 export default function Header({ open, onDrawerOpen }: HeaderProp) {
   const theme = useTheme();
-
+  const dispatch = useAppDispatch();
+  const router = useRouter();
   interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
   }
@@ -61,18 +65,12 @@ export default function Header({ open, onDrawerOpen }: HeaderProp) {
   return (
     <AppBar position="fixed" open={open}>
       <Toolbar>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          onClick={handleDrawerOpen}
-          edge="start"
-          sx={{ mr: 2, ...(open && { display: "none" }) }}
-        >
+        <IconButton color="inherit" aria-label="open drawer" onClick={handleDrawerOpen} edge="start" sx={{ mr: 2, ...(open && { display: "none" }) }}>
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" noWrap component="div">
           CMStock Workshop with ReactJS - Typescript (TS) V.
-          {process.env.REACT_APP_VERSION}
+          {process.env.NEXT_PUBLIC_APP_VERSION}
         </Typography>
 
         <Box sx={{ flexGrow: 1 }} />
@@ -82,32 +80,17 @@ export default function Header({ open, onDrawerOpen }: HeaderProp) {
         </Typography>
 
         <Box sx={{ display: { xs: "none", md: "flex" } }}>
-          <IconButton
-            size="large"
-            aria-label="show 4 new mails"
-            color="inherit"
-          >
+          <IconButton size="large" aria-label="show 4 new mails" color="inherit">
             <Badge badgeContent={4} color="error">
               <MailIcon />
             </Badge>
           </IconButton>
-          <IconButton
-            size="large"
-            aria-label="show 17 new notifications"
-            color="inherit"
-          >
+          <IconButton size="large" aria-label="show 17 new notifications" color="inherit">
             <Badge badgeContent={17} color="error">
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <IconButton
-            size="large"
-            edge="end"
-            aria-label="account of current user"
-            aria-haspopup="true"
-            onClick={() => {}}
-            color="inherit"
-          >
+          <IconButton size="large" edge="end" aria-label="account of current user" aria-haspopup="true" onClick={() => dispatch(signOut(router))} color="inherit">
             <AccountCircle />
           </IconButton>
         </Box>

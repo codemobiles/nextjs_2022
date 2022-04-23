@@ -23,5 +23,27 @@ npx create-next-app@latest cmnextstock-2022 --typescript
 yarn add @emotion/cache @emotion/react @emotion/server @emotion/styled or yarn add @emotion/cache @emotion/react @emotion/server @emotion/styled
 yarn add @mui/material
 yarn add @mui/icons-material
-
 yarn add clsx
+yarn add formik formik-material-ui chart.js react-chartjs-2 react-moment react-number-format
+yarn add @reduxjs/toolkit react-redux axios cookie @react-hook/debounce @mui/x-data-grid moment react-iframe
+
+yarn add @types/cookie --dev
+
+
+
+-----------
+<Link href="/about" passHref>
+  <Button variant="contained" color="secondary">About</Button>
+</Link>
+
+
+<Link href="/about" passHref>
+ <ListItem button component="a" onClick={onClick}>
+  <ListItemText>About</ListItemText>
+ </ListItem>
+</Link>
+
+# next.config.js
+  images: {
+    domains: ["localhost"],
+  },

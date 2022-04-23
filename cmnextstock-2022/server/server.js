@@ -12,5 +12,5 @@ app.use("/api/v2/authen/", require("./api_authen"));
 app.use("/api/v2/stock/", require("./api_stock"));
 
 app.listen(PORT, () => {
-  console.log("Backend is running..");
+  console.log("Backend is running.. " + PORT);
 });

@@ -28,9 +28,27 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.get("/profile", jwt.verify, async (req, res) => {
+  const { username } = req;
+  const payload = { username, level: "normal" };
+  const token = jwt.sign(payload);
+  res.json({
+    result: "ok",
+    user: {
+      token,
+      username,
+      firstname: "Chaiyasit",
+      lastname: "T.",
+      email: "chaiyasit.t@codemobiles.com",
+      image: "/default_image.jpg",
+    },
+  });
+});
+
 // Register
 router.post("/register", async (req, res) => {
   try {
+    console.log(JSON.stringify(req.body));
     req.body.password = bcrypt.hashSync(req.body.password, 8);
     let result = await user.create(req.body);
     res.json({ result: constants.kResultOk, message: JSON.stringify(result) });

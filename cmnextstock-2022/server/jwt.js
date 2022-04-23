@@ -6,7 +6,9 @@ module.exports = {
     return jwt.sign(payload, secret_key);
   },
   verify: (req, res, next) => {
-    var token = req.headers["x-access-token"];
+    var token = req.headers.authorization
+      ? req.headers.authorization.split(" ")[1]
+      : null;
     if (!token)
       return res
         .status(403)

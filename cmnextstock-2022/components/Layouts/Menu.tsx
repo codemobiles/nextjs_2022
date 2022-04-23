@@ -22,6 +22,7 @@ import BarChart from "@mui/icons-material/BarChart";
 import Person from "@mui/icons-material/Person";
 import { Stack } from "@mui/material";
 import Link from "next/link";
+import Image from "next/image";
 
 const drawerWidth = 240;
 
@@ -61,22 +62,16 @@ export default function Menu({ open, onDrawerClose }: MenuProp) {
       anchor="left"
       open={open}
     >
-      <DrawerHeader>
+      <DrawerHeader sx={{ background: "#1976D2" }}>
         <Stack direction="row" alignItems="center">
-          <img src="/static/img/cm_logo.png" style={{ height: 30 }} />
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
+          <Image src="/static/img/cm_logo.png" width={200} height={40} objectFit="contain" alt="logo" />
+          <IconButton onClick={handleDrawerClose}>{theme.direction === "ltr" ? <ChevronLeftIcon /> : <ChevronRightIcon />}</IconButton>
         </Stack>
       </DrawerHeader>
       <Divider />
       <List>
         {/* Stock */}
-        <Link href="/stock">
+        <Link href="/stock" passHref>
           <ListItem button>
             <ListItemIcon>
               <Layers />
@@ -86,7 +81,7 @@ export default function Menu({ open, onDrawerClose }: MenuProp) {
         </Link>
 
         {/* Report */}
-        <Link href="/report">
+        <Link href="/report" passHref>
           <ListItem button>
             <ListItemIcon>
               <BarChart />
@@ -96,7 +91,7 @@ export default function Menu({ open, onDrawerClose }: MenuProp) {
         </Link>
 
         {/* Aboutus */}
-        <Link href="/aboutus">
+        <Link href="/aboutus" passHref>
           <ListItem button>
             <ListItemIcon>
               <Person />
@@ -109,9 +104,7 @@ export default function Menu({ open, onDrawerClose }: MenuProp) {
       <List>
         {["All mail", "Trash", "Spam"].map((text, index) => (
           <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
+            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
