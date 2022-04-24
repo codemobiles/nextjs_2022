@@ -1,18 +1,14 @@
 import * as React from "react";
-import type { AppProps } from "next/app";
-import { CacheProvider, EmotionCache } from "@emotion/react";
-import { ThemeProvider, CssBaseline, createTheme, styled } from "@mui/material";
+import { Container, CssBaseline, styled, useTheme } from "@mui/material";
 import { store } from "@/store/store";
-import { getSession, isAuthenticatedSelector, signOut } from "@/store/slices/userSlice";
+import { getSession } from "@/store/slices/userSlice";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-import createEmotionCache from "@/utility/createEmotionCache";
 import Header from "@/components/Layouts/Header";
 import Menu from "@/components/Layouts/Menu";
-import { blue, blueGrey } from "@mui/material/colors";
 import { useEffect } from "react";
 const drawerWidth = 240;
 
@@ -20,45 +16,16 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-const theme = createTheme({
-  components: {
-    MuiDrawer: {
-      styleOverrides: {
-        paper: {
-          backgroundImage: 'url("/static/img/background_menu.png")',
-          backgroundRepeat: "no-repeat",
-          backgroundColor: "#f2fcff",
-          backgroundPosition: "bottom",
-          width: drawerWidth,
-        },
-      },
-    },
-  },
-  typography: {
-    fontFamily: "Roboto",
-    fontWeightLight: 300,
-    fontWeightRegular: 400,
-    fontWeightMedium: 500,
-    fontWeightBold: 700,
-  },
-  spacing: 8,
-  palette: {
-    primary: process.env.REACT_APP_IS_PRODUCTION == "0" ? blue : blueGrey,
-    background: {
-      default: "#FFF",
-    },
-  },
-});
-
 const Layout = ({ children }: LayoutProps) => {
   const [open, setOpen] = React.useState(true);
+  const theme = useTheme();
 
   // update session & set token
   useEffect(() => {
     store.dispatch(getSession());
   }, []);
 
-  const DrawerHeader = styled("div")(({ theme }: any) => ({
+  const DrawerHeader = styled("div")(() => ({
     display: "flex",
     alignItems: "center",
     padding: theme.spacing(0, 1),

@@ -23,6 +23,8 @@ import Person from "@mui/icons-material/Person";
 import { Stack } from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import { blue } from "@mui/material/colors";
 
 const drawerWidth = 240;
 
@@ -42,6 +44,7 @@ type MenuProp = {
 
 export default function Menu({ open, onDrawerClose }: MenuProp) {
   const theme = useTheme();
+  const router = useRouter();
 
   const handleDrawerClose = () => {
     // setOpen(false);
@@ -62,7 +65,7 @@ export default function Menu({ open, onDrawerClose }: MenuProp) {
       anchor="left"
       open={open}
     >
-      <DrawerHeader sx={{ background: "#1976D2" }}>
+      <DrawerHeader sx={{ background: blue }}>
         <Stack direction="row" alignItems="center">
           <Image src="/static/img/cm_logo.png" width={200} height={40} objectFit="contain" alt="logo" />
           <IconButton onClick={handleDrawerClose}>{theme.direction === "ltr" ? <ChevronLeftIcon /> : <ChevronRightIcon />}</IconButton>
@@ -72,7 +75,7 @@ export default function Menu({ open, onDrawerClose }: MenuProp) {
       <List>
         {/* Stock */}
         <Link href="/stock" passHref>
-          <ListItem button>
+          <ListItem button className={router.pathname === "/stock" ? "Mui-selected" : ""}>
             <ListItemIcon>
               <Layers />
             </ListItemIcon>
@@ -82,7 +85,7 @@ export default function Menu({ open, onDrawerClose }: MenuProp) {
 
         {/* Report */}
         <Link href="/report" passHref>
-          <ListItem button>
+          <ListItem button className={router.pathname === "/report" ? "Mui-selected" : ""}>
             <ListItemIcon>
               <BarChart />
             </ListItemIcon>
@@ -92,7 +95,7 @@ export default function Menu({ open, onDrawerClose }: MenuProp) {
 
         {/* Aboutus */}
         <Link href="/aboutus" passHref>
-          <ListItem button>
+          <ListItem button className={router.pathname === "/aboutus" ? "Mui-selected" : ""}>
             <ListItemIcon>
               <Person />
             </ListItemIcon>

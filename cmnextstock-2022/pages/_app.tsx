@@ -1,6 +1,5 @@
 import * as React from "react";
 import type { AppProps } from "next/app";
-import { EmotionCache } from "@emotion/react";
 import { store } from "@/store/store";
 import { getSession } from "@/store/slices/userSlice";
 import { Provider } from "react-redux";
@@ -11,44 +10,44 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import "@/styles/globals.css";
 import { useEffect } from "react";
-import { ThemeProvider, CssBaseline, createTheme, styled } from "@mui/material";
-import { blue, blueGrey } from "@mui/material/colors";
+import { ThemeProvider, createTheme } from "@mui/material";
+import { blue } from "@mui/material/colors";
 const drawerWidth = 240;
+const theme = createTheme({
+  components: {
+    MuiDrawer: {
+      styleOverrides: {
+        paper: {
+          backgroundImage: 'url("/static/img/background_menu.png")',
+          backgroundRepeat: "no-repeat",
+          backgroundColor: "#f2fcff",
+          backgroundPosition: "bottom",
+          width: drawerWidth,
+        },
+      },
+    },
+  },
+  typography: {
+    fontFamily: "Roboto",
+    fontWeightLight: 300,
+    fontWeightRegular: 400,
+    fontWeightMedium: 500,
+    fontWeightBold: 700,
+  },
+  spacing: 8,
+  palette: {
+    primary: process.env.REACT_APP_IS_PRODUCTION == "0" ? blue : blue,
+    background: {
+      default: "#FFF",
+    },
+  },
+});
 
 interface MyAppProps extends AppProps {}
 
 const MyApp = (props: MyAppProps) => {
   const { Component, pageProps } = props;
 
-  const theme = createTheme({
-    components: {
-      MuiDrawer: {
-        styleOverrides: {
-          paper: {
-            backgroundImage: 'url("/static/img/background_menu.png")',
-            backgroundRepeat: "no-repeat",
-            backgroundColor: "#f2fcff",
-            backgroundPosition: "bottom",
-            width: drawerWidth,
-          },
-        },
-      },
-    },
-    typography: {
-      fontFamily: "Roboto",
-      fontWeightLight: 300,
-      fontWeightRegular: 400,
-      fontWeightMedium: 500,
-      fontWeightBold: 700,
-    },
-    spacing: 8,
-    palette: {
-      primary: process.env.REACT_APP_IS_PRODUCTION == "0" ? blue : blueGrey,
-      background: {
-        default: "#FFF",
-      },
-    },
-  });
   // update session & set token
   useEffect(() => {
     store.dispatch(getSession());

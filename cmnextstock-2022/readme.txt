@@ -47,3 +47,15 @@ yarn add @types/cookie --dev
   images: {
     domains: ["localhost"],
   },
+
+
+# Deployment (look at package.json)
+----------------------
+yarn dev 
+yarn build
+yarn start
+
+"dev": "next dev -p 3005"
+or 
+yarn dev -p 3005
+yarn start -p 3005

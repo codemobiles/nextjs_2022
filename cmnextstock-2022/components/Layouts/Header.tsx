@@ -16,7 +16,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
-import { Badge } from "@mui/material";
+import { Badge, Menu, MenuItem } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { styled } from "@mui/system";
@@ -36,6 +36,16 @@ export default function Header({ open, onDrawerOpen }: HeaderProp) {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const [showProfileMenu, setShowProfileMenu] = React.useState<boolean>(false);
+
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setShowProfileMenu(!showProfileMenu);
+  };
+
+  const handleClose = () => {
+    setShowProfileMenu(false);
+  };
+
   interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
   }
@@ -65,7 +75,13 @@ export default function Header({ open, onDrawerOpen }: HeaderProp) {
   return (
     <AppBar position="fixed" open={open}>
       <Toolbar>
-        <IconButton color="inherit" aria-label="open drawer" onClick={handleDrawerOpen} edge="start" sx={{ mr: 2, ...(open && { display: "none" }) }}>
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          onClick={handleDrawerOpen}
+          edge="start"
+          sx={{ mr: 2, ...(open && { display: "none" }) }}
+        >
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" noWrap component="div">
@@ -80,19 +96,51 @@ export default function Header({ open, onDrawerOpen }: HeaderProp) {
         </Typography>
 
         <Box sx={{ display: { xs: "none", md: "flex" } }}>
-          <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+          <IconButton
+            size="large"
+            aria-label="show 4 new mails"
+            color="inherit"
+          >
             <Badge badgeContent={4} color="error">
               <MailIcon />
             </Badge>
           </IconButton>
-          <IconButton size="large" aria-label="show 17 new notifications" color="inherit">
+          <IconButton
+            size="large"
+            aria-label="show 17 new notifications"
+            color="inherit"
+          >
             <Badge badgeContent={17} color="error">
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <IconButton size="large" edge="end" aria-label="account of current user" aria-haspopup="true" onClick={() => dispatch(signOut(router))} color="inherit">
+          <IconButton
+            size="large"
+            aria-label="account of current user"
+            aria-haspopup="true"
+            onClick={handleMenu}
+            color="inherit"
+          >
             <AccountCircle />
           </IconButton>
+          <Menu
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            open={showProfileMenu}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={() => dispatch(signOut(router))}>
+              Logout
+            </MenuItem>
+            <MenuItem onClick={handleClose}>My account</MenuItem>
+          </Menu>
         </Box>
       </Toolbar>
     </AppBar>
