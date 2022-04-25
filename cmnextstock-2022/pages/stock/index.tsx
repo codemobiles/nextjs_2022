@@ -2,14 +2,40 @@ import * as React from "react";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { deleteProduct, getProducts, productSelector } from "@/store/slices/productSlice";
+import {
+  deleteProduct,
+  getProducts,
+  productSelector,
+} from "@/store/slices/productSlice";
 import { productImageURL } from "@/utils/commonUtil";
 import { useAppDispatch } from "@/store/store";
 import { useSelector } from "react-redux";
-import { Typography, Stack, IconButton, Box, TextField, Fab, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid } from "@mui/material";
+import {
+  Typography,
+  Stack,
+  IconButton,
+  Box,
+  TextField,
+  Fab,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Grid,
+} from "@mui/material";
 import NumberFormat from "react-number-format";
 import Moment from "react-moment";
-import { Add, AddShoppingCart, AssignmentReturn, Clear, NewReleases, Search, Star } from "@mui/icons-material";
+import {
+  Add,
+  AddShoppingCart,
+  AssignmentReturn,
+  Clear,
+  NewReleases,
+  Search,
+  Star,
+} from "@mui/icons-material";
 import { useDebounce } from "@react-hook/debounce";
 import { ProductData } from "@/models/product.model";
 import StockCard from "@/components/StockCard";
@@ -18,6 +44,8 @@ import Image from "next/image";
 import Link from "next/link";
 import Layout from "@/components/Layouts/Layout";
 import withAuth from "@/components/withAuth";
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
 
 interface QuickSearchToolbarProps {
   clearSearch: () => void;
@@ -41,7 +69,13 @@ function QuickSearchToolbar(props: QuickSearchToolbarProps) {
         InputProps={{
           startAdornment: <Search fontSize="small" />,
           endAdornment: (
-            <IconButton title="Clear" aria-label="Clear" size="small" style={{ visibility: props.value ? "visible" : "hidden" }} onClick={props.clearSearch}>
+            <IconButton
+              title="Clear"
+              aria-label="Clear"
+              size="small"
+              style={{ visibility: props.value ? "visible" : "hidden" }}
+              onClick={props.clearSearch}
+            >
               <Clear fontSize="small" />
             </IconButton>
           ),
@@ -82,8 +116,10 @@ function QuickSearchToolbar(props: QuickSearchToolbarProps) {
 const StockPage = () => {
   const dispatch = useAppDispatch();
   const [keywordSearch, setKeywordSearch] = useDebounce<string>("", 1000);
-  const [keywordSearchNoDelay, setKeywordSearchNoDelay] = React.useState<string>("");
-  const [selectedProduct, setSelectedProduct] = React.useState<ProductData | null>(null);
+  const [keywordSearchNoDelay, setKeywordSearchNoDelay] =
+    React.useState<string>("");
+  const [selectedProduct, setSelectedProduct] =
+    React.useState<ProductData | null>(null);
   const [openDialog, setOpenDialog] = React.useState<boolean>(false);
   const router = useRouter();
   const productList = useSelector(productSelector);
@@ -105,7 +141,16 @@ const StockPage = () => {
       field: "image",
       width: 80,
       renderCell: ({ value }: GridRenderCellParams<string>) => (
-        <Image height={100} width={100} objectFit="cover" alt="product image" src={productImageURL(value)} style={{ width: 70, height: 70, borderRadius: "5%" }} />
+        <Zoom>
+          <Image
+            height={500}
+            width={500}
+            objectFit="cover"
+            alt="product image"
+            src={productImageURL(value)}
+            style={{ width: 70, height: 70, borderRadius: "5%" }}
+          />
+        </Zoom>
       ),
     },
     {
@@ -119,7 +164,13 @@ const StockPage = () => {
       field: "stock",
       renderCell: ({ value }: GridRenderCellParams<string>) => (
         <Typography variant="body1">
-          <NumberFormat value={value} displayType={"text"} thousandSeparator={true} decimalScale={0} fixedDecimalScale={true} />
+          <NumberFormat
+            value={value}
+            displayType={"text"}
+            thousandSeparator={true}
+            decimalScale={0}
+            fixedDecimalScale={true}
+          />
         </Typography>
       ),
     },
@@ -129,7 +180,14 @@ const StockPage = () => {
       width: 120,
       renderCell: ({ value }: GridRenderCellParams<string>) => (
         <Typography variant="body1">
-          <NumberFormat value={value} displayType={"text"} thousandSeparator={true} decimalScale={2} fixedDecimalScale={true} prefix={"฿"} />
+          <NumberFormat
+            value={value}
+            displayType={"text"}
+            thousandSeparator={true}
+            decimalScale={2}
+            fixedDecimalScale={true}
+            prefix={"฿"}
+          />
         </Typography>
       ),
     },
@@ -149,7 +207,11 @@ const StockPage = () => {
       width: 120,
       renderCell: ({ row }: GridRenderCellParams<string>) => (
         <Stack direction="row">
-          <IconButton aria-label="edit" size="large" onClick={() => router.push("/stock/edit?id=" + row.id)}>
+          <IconButton
+            aria-label="edit"
+            size="large"
+            onClick={() => router.push("/stock/edit?id=" + row.id)}
+          >
             <EditIcon fontSize="inherit" />
           </IconButton>
           <IconButton
@@ -180,14 +242,28 @@ const StockPage = () => {
     }
 
     return (
-      <Dialog open={openDialog} keepMounted aria-labelledby="alert-dialog-slide-title" aria-describedby="alert-dialog-slide-description">
+      <Dialog
+        open={openDialog}
+        keepMounted
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description"
+      >
         <DialogTitle id="alert-dialog-slide-title">
-          <Image width={100} height={100} objectFit="cover" alt="product image" src={productImageURL(selectedProduct.image)} style={{ width: 100, borderRadius: "5%" }} />
+          <Image
+            width={100}
+            height={100}
+            objectFit="cover"
+            alt="product image"
+            src={productImageURL(selectedProduct.image)}
+            style={{ width: 100, borderRadius: "5%" }}
+          />
           <br />
           Confirm to delete the product? : {selectedProduct.name}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">You cannot restore deleted product.</DialogContentText>
+          <DialogContentText id="alert-dialog-slide-description">
+            You cannot restore deleted product.
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpenDialog(false)} color="info">
@@ -206,19 +282,39 @@ const StockPage = () => {
       {/* Summary Icons */}
       <Grid container style={{ marginBottom: 16 }} spacing={7}>
         <Grid item lg={3} md={6}>
-          <StockCard icon={AddShoppingCart} title="TOTAL" subtitle="112 THB" color="#00a65a" />
+          <StockCard
+            icon={AddShoppingCart}
+            title="TOTAL"
+            subtitle="112 THB"
+            color="#00a65a"
+          />
         </Grid>
 
         <Grid item lg={3} md={6}>
-          <StockCard icon={NewReleases} title="EMPTY" subtitle="9 PCS." color="#f39c12" />
+          <StockCard
+            icon={NewReleases}
+            title="EMPTY"
+            subtitle="9 PCS."
+            color="#f39c12"
+          />
         </Grid>
 
         <Grid item lg={3} md={6}>
-          <StockCard icon={AssignmentReturn} title="RETURN" subtitle="1 PCS." color="#dd4b39" />
+          <StockCard
+            icon={AssignmentReturn}
+            title="RETURN"
+            subtitle="1 PCS."
+            color="#dd4b39"
+          />
         </Grid>
 
         <Grid item lg={3} md={6}>
-          <StockCard icon={Star} title="LOSS" subtitle="5 PCS." color="#00c0ef" />
+          <StockCard
+            icon={Star}
+            title="LOSS"
+            subtitle="5 PCS."
+            color="#00c0ef"
+          />
         </Grid>
       </Grid>
 
