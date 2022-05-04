@@ -2,7 +2,7 @@
 ---------------------------------
 https://dev.to/hajhosein/nextjs-mui-v5-typescript-tutorial-and-starter-3pab
 npx create-next-app@latest cmnextstock-2022 --typescript
-yarn add @emotion/cache @emotion/react @emotion/server @emotion/styled or yarn add @emotion/cache @emotion/react @emotion/server @emotion/styled
+yarn add @emotion/cache @emotion/react @emotion/server @emotion/styled
 yarn add @mui/material
 
 
@@ -20,10 +20,9 @@ code --install-extension alexcvzz.vscode-sqlite
 ---------------------------------
 https://dev.to/hajhosein/nextjs-mui-v5-typescript-tutorial-and-starter-3pab
 npx create-next-app@latest cmnextstock-2022 --typescript
-yarn add @emotion/cache @emotion/react @emotion/server @emotion/styled or yarn add @emotion/cache @emotion/react @emotion/server @emotion/styled
+yarn add @emotion/cache @emotion/react @emotion/server @emotion/styled
 yarn add @mui/material
 yarn add @mui/icons-material
-yarn add clsx
 yarn add formik formik-material-ui chart.js react-chartjs-2 react-moment react-number-format
 yarn add @reduxjs/toolkit react-redux axios cookie @react-hook/debounce @mui/x-data-grid moment react-iframe
 yarn add @types/cookie --dev

@@ -333,7 +333,7 @@ const StockPage = () => {
             },
           },
         }}
-        sx={{ backgroundColor: "white", height: "80vh" }}
+        sx={{ backgroundColor: "white", height: "70vh" }}
         rows={productList ?? []}
         columns={stockColumns}
         pageSize={15}

@@ -72,7 +72,6 @@ const Layout = ({ children }: LayoutProps) => {
             margin: 0;
             background-size: cover;
             background-image: url("/static/img/bg4.jpg");
-            text-align: center;
           }
         `}
       </style>

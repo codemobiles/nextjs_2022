@@ -18,7 +18,7 @@ const theme = createTheme({
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          backgroundImage: 'url("/static/img/background_menu.png")',
+          backgroundImage: 'url("/static/img/background_menu.jpg")',
           backgroundRepeat: "no-repeat",
           backgroundColor: "#f2fcff",
           backgroundPosition: "bottom",

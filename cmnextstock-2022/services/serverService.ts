@@ -7,8 +7,12 @@ type signUpProps = {
   username: string;
   password: string;
 };
+
 export const signUp = async (user: signUpProps): Promise<SignUp> => {
-  const { data: response } = await httpClient.post<SignUp>(`/authen/register`, user);
+  const { data: response } = await httpClient.post<SignUp>(
+    `/authen/register`,
+    user
+  );
   return response;
 };
 
@@ -17,9 +21,13 @@ type signInProps = {
   password: string;
 };
 export const signIn = async (user: signInProps): Promise<SignIn> => {
-  const { data: response } = await httpClient.post<SignIn>(`/auth/signin`, user, {
-    baseURL: process.env.NEXT_PUBLIC_BASE_URL_LOCAL_API,
-  });
+  const { data: response } = await httpClient.post<SignIn>(
+    `/auth/signin`,
+    user,
+    {
+      baseURL: process.env.NEXT_PUBLIC_BASE_URL_LOCAL_API,
+    }
+  );
   return response;
 };
 
