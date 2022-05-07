@@ -23,9 +23,6 @@ const Register = (prop: Props) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  React.useEffect(() => {
-    // dispatch(actions.reRegister({ token }));
-  }, []);
 
   const showForm = ({ values, setFieldValue, isValid, dirty, handleSubmit }: FormikProps<any>) => {
     return (

@@ -8,7 +8,7 @@ import { AxiosRequestConfig } from "axios";
 import { NextRouter } from "next/router";
 
 // config initialSate
-interface UserState {
+export interface UserState {
   username: string;
   accessToken: string;
   error?: string;
@@ -41,41 +41,50 @@ interface SetUser {
   user: UserData;
 }
 
-export const signUp = createAsyncThunk("user/signup", async (credential: SignInAction) => {
-  const response = await serverService.signUp(credential);
-  return response;
-});
-
-export const signIn = createAsyncThunk("user/signin", async (credential: SignInAction) => {
-  const response = await serverService.signIn(credential);
-  if (response.result != "ok") {
-    throw new Error("login failed");
+export const signUp = createAsyncThunk(
+  "user/signup",
+  async (credential: SignInAction) => {
+    const response = await serverService.signUp(credential);
+    return response;
   }
+);
 
-  // set access token
-  httpClient.interceptors.request.use((config?: AxiosRequestConfig) => {
-    if (config && config.headers) {
-      config.headers["Authorization"] = `Bearer ${response.token}`;
+export const signIn = createAsyncThunk(
+  "user/signin",
+  async (credential: SignInAction) => {
+    const response = await serverService.signIn(credential);
+    if (response.result != "ok") {
+      throw new Error("login failed");
     }
 
-    return config;
-  });
-  return response;
-});
+    // set access token
+    httpClient.interceptors.request.use((config?: AxiosRequestConfig) => {
+      if (config && config.headers) {
+        config.headers["Authorization"] = `Bearer ${response.token}`;
+      }
 
-export const signOut = createAsyncThunk("user/signout", async (router: NextRouter) => {
-  await serverService.signOut();
+      return config;
+    });
+    return response;
+  }
+);
 
-  // clear token
-  httpClient.interceptors.request.use((config?: AxiosRequestConfig) => {
-    if (config && config.headers) {
-      config.headers["Authorization"] = "";
-    }
-    return config;
-  });
+export const signOut = createAsyncThunk(
+  "user/signout",
+  async (router: NextRouter) => {
+    await serverService.signOut();
 
-  router.push("/");
-});
+    // clear token
+    httpClient.interceptors.request.use((config?: AxiosRequestConfig) => {
+      if (config && config.headers) {
+        config.headers["Authorization"] = "";
+      }
+      return config;
+    });
+
+    router.push("/");
+  }
+);
 
 export const getSession = createAsyncThunk("user/fetchSession", async () => {
   const response = await serverService.getSession();
@@ -126,7 +135,6 @@ const userSlice = createSlice({
       state.accessToken = "";
       state.user = undefined;
       state.isAuthenticated = false;
-      debugger;
     });
     builder.addCase(getSession.fulfilled, (state, action) => {
       state.isAuthenticating = false;
@@ -143,8 +151,10 @@ const userSlice = createSlice({
 export const { setSession, setUser } = userSlice.actions;
 
 // export common user selector
-export const userSelector = (store: RootState): UserData | undefined => store.user.user;
-export const isAuthenticatedSelector = (store: RootState): boolean => store.user.isAuthenticated;
+export const userSelector = (store: RootState): UserData | undefined =>
+  store.user.user;
+export const isAuthenticatedSelector = (store: RootState): boolean =>
+  store.user.isAuthenticated;
 
 // // export reducer
 export default userSlice.reducer;
