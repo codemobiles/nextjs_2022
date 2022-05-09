@@ -151,10 +151,8 @@ const userSlice = createSlice({
 export const { setSession, setUser } = userSlice.actions;
 
 // export common user selector
-export const userSelector = (store: RootState): UserData | undefined =>
-  store.user.user;
-export const isAuthenticatedSelector = (store: RootState): boolean =>
-  store.user.isAuthenticated;
+export const userSelector = (store: RootState): UserData | undefined => store.user.user;
+export const isAuthenticatedSelector = (store: RootState): boolean => store.user.isAuthenticated;
 
 // // export reducer
 export default userSlice.reducer;
